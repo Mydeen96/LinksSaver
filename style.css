@@ -1,38 +1,65 @@
+:root{
+    --blue : #00796b ;
+    --lightblue :#e0f7fa ;
+}
+
 body{
     margin: 0;
     padding: 10px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     min-width: 400px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: var(--lightblue);
+    color:var(--blue);
 }
 
 #input-box{
     padding: 10px;
-    box-sizing: border-box;
+    border-radius: 20px;
     width: 100%;
-    border: 1px solid #5f9341;
+    outline: none;
+    box-sizing: border-box;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    background-color: white;
 }
-#save-btn{
+.btn{
     cursor: pointer;
-    margin: 5px 0px;
+    border-radius: 20px;
+    margin: 10px 0px;
     padding: 10px 20px;
     font-size: 15px;
     font-weight: bold;
     color: white;
-    background-color: #5F9340;
-    border: 1px solid #5F9340 ;
+    background-color: var(--blue);
+    border: 1px solid var(--blue);
 }
-.input-box:active{
-    background-color: rgb(214, 245, 255);
+#delete-btn:active{
+    padding: 9px 19px;
+}
+#delete-btn{
+    background-color: white;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+}
+.btn:active{
+    border: 1px solid  var(--lightblue);
 }
 ul{
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
+    list-style: none ;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 li{
+    width: 500px;
+    margin-left: -30px;
     margin-top:5px ;
+    padding: 5px;
+    border-radius: 5px;
+    word-wrap: break-word;
+    background-color: white;
 }
-a{
-    color: #5F9340;
+a{    
+    color:var(--blue) ;
+    font-size: large;
 }
 
