@@ -1,43 +1,50 @@
-let myleads = []
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"
+import { getDatabase,
+         ref,
+         push,
+         onValue,
+         remove
+ } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js"
+
+const firebaseConfig = {
+    databaseURL: "https://leads-tracker-appp-default-rtdb.asia-southeast1.firebasedatabase.app/"
+}
+
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
+const referenceInDB = ref(database , "Leads")
+
+
 const inputEl = document.getElementById("input-box");
 const saveEl = document.getElementById("save-btn") ;
 const ulEl = document.getElementById("ul-el");
-const tabBtn = document.getElementById("tab-btn");
 const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myleads") );
 
-if(leadsFromLocalStorage){
-    myleads = leadsFromLocalStorage ;
-    render(myleads)
-}
+onValue(referenceInDB , function(snapshot){
+    const snapshotExist = snapshot.exists()
+     if(snapshotExist){
+        const snapshotValues = snapshot.val()
+            const leads = Object.values(snapshotValues)
+            render(leads)
+     }
+})
+
 
 saveEl.addEventListener('click',function(){
         if(inputEl.value !== "" ){
-            inputEl.placeholder = ""
-            myleads.push(inputEl.value);
+            inputEl.placeholder = "eg: https://www.google.com"
+            push(referenceInDB, inputEl.value);
             inputEl.value = "";
-            render(myleads)
-            localStorage.setItem("myleads" , JSON.stringify(myleads))
         }
         else{
             inputEl.placeholder = "Please type the link"
         }
 })
 
-tabBtn.addEventListener('click' , function(){
-    inputEl.placeholder = ""
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){    
-        myleads.push(tabs[0].url)
-        localStorage.setItem("myleads" , JSON.stringify(myleads) )
-        render(myleads)
-    })
-})
 
-deleteBtn.addEventListener('dblclick', function(){
-    inputEl.placeholder = ""
-    localStorage.clear()
-    myleads = []
-    render(myleads)
+deleteBtn.addEventListener('dblclick' , function(){
+    remove(referenceInDB)
+    ulEl.innerHTML = ""
 })
 
 function render(leads){
